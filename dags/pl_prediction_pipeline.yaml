@@ -1,0 +1,26 @@
+# This is a Kustomize file for deploying the entire pipeline to Kubernetes
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: pl-prediction
+
+resources:
+  - ../k8s/namespace.yaml
+  - ../k8s/postgres-deployment.yaml
+  - ../k8s/mlflow-deployment.yaml
+
+configMapGenerator:
+  - name: spark-config
+    files:
+      - spark-defaults.conf
+  - name: kafka-config
+    files:
+      - kafka-config.properties
+
+secretGenerator:
+  - name: postgres-secrets
+    literals:
+      - password=mlflow_secure_pwd
+
+patchesStrategicMerge:
+  - patch-replicas.yaml
