@@ -4,10 +4,10 @@ Production-ready big data analytics platform for Premier League top 6 prediction
 
 ## Architecture Overview
 
-\`\`\`
+```
 ┌─────────────────────┐
 │   Data Sources      │
-│ (APIs, CSVs, Kafka)│
+│ (APIs, CSVs, Kafka) │
 └──────────┬──────────┘
            │
            ▼
@@ -26,7 +26,7 @@ Production-ready big data analytics platform for Premier League top 6 prediction
 ┌─────────────────────┐       ┌──────────────┐
 │  ML Training        │──────▶│   MLflow     │
 │  (PySpark MLlib)    │       │  (Tracking)  │
-└──────────┬──────────┘       └──────────────┘
+└─────────────────────┘       └──────────────┘
            │
            ▼
 ┌─────────────────────┐
@@ -43,9 +43,9 @@ Production-ready big data analytics platform for Premier League top 6 prediction
            ▼
 ┌─────────────────────────────────┐
 │  Monitoring & Observability     │
-│ (Prometheus, Grafana, Logs)    │
+│ (Prometheus, Grafana, Logs)     │
 └─────────────────────────────────┘
-\`\`\`
+```
 
 ## Quick Start
 
@@ -53,56 +53,57 @@ Production-ready big data analytics platform for Premier League top 6 prediction
 - Docker & Docker Compose
 - Python 3.11+
 - Git
+- Node.js & npm
 
 ### Installation
 
 1. **Clone and setup:**
-   \`\`\`bash
-   git clone <repo-url>
+   ```bash
+   git clone https://github.com/oussamaelmessaoudi/EPL-Predictor-Forecasting-with-Machine-Learning.git
    cd pl-prediction-big-data
    npm run setup
-   \`\`\`
+   ```
 
 2. **Start infrastructure:**
-   \`\`\`bash
+   ```bash
    npm run dev
    # or for production
    npm run prod
-   \`\`\`
+   ```
 
 3. **Initialize Kafka topics:**
-   \`\`\`bash
+   ```bash
    npm run init-kafka
-   \`\`\`
+   ```
 
 4. **Access services:**
-   - MLflow UI: http://localhost:5000
-   - Grafana: http://localhost:3001 (admin/admin)
-   - Prometheus: http://localhost:9090
-   - FastAPI Docs: http://localhost:8000/docs
-   - React Dashboard: http://localhost:3000
+   - MLflow UI: [http://localhost:5000](http://localhost:5000)
+   - Grafana: [http://localhost:3001](http://localhost:3001) (admin/admin)
+   - Prometheus: [http://localhost:9090](http://localhost:9090)
+   - FastAPI Docs: [http://localhost:8000/docs](http://localhost:8000/docs)
+   - React Dashboard: [http://localhost:3000](http://localhost:3000)
 
 ## Project Structure
 
-\`\`\`
+```
 pl-prediction-big-data/
 ├── docker-compose.yml          # Main services
 ├── docker-compose.dev.yml      # Development Spark cluster
 ├── spark/                      # Spark jobs and streaming
-│   ├── jobs/                  # Batch processing jobs
+│   ├── jobs/                   # Batch processing jobs
 │   │   ├── data_ingestion.py
 │   │   ├── feature_engineering.py
 │   │   └── model_training.py
-│   └── streaming/             # Real-time streaming
+│   └── streaming/              # Real-time streaming
 │       ├── match_stream_processor.py
 │       └── prediction_stream.py
 ├── api/                        # FastAPI backend
-│   ├── main.py                # Application entry
+│   ├── main.py                 # Application entry
 │   ├── requirements.txt
 │   ├── app/
-│   │   ├── routers/           # API endpoints
-│   │   ├── services/          # Business logic
-│   │   └── models/            # Data models
+│   │   ├── routers/            # API endpoints
+│   │   ├── services/           # Business logic
+│   │   └── models/             # Data models
 │   └── Dockerfile
 ├── app/                        # Next.js frontend
 │   └── page.tsx
@@ -116,37 +117,36 @@ pl-prediction-big-data/
 │   └── grafana/
 ├── k8s/                        # Kubernetes manifests
 └── scripts/                    # Utility scripts
-\`\`\`
+```
 
 ## Core Technologies
 
-| Component | Technology |
-|-----------|-----------|
-| Storage | Delta Lake, PostgreSQL |
-| Processing | Apache Spark (Batch & Streaming) |
-| Messaging | Apache Kafka |
-| ML/AI | PySpark MLlib, MLflow |
-| API | FastAPI |
-| Frontend | React, TypeScript |
+| Component     | Technology              |
+|---------------|-------------------------|
+| Storage       | Delta Lake, PostgreSQL  |
+| Processing    | Apache Spark (Batch & Streaming) |
+| Messaging     | Apache Kafka            |
+| ML/AI         | PySpark MLlib, MLflow   |
+| API           | FastAPI                 |
+| Frontend      | React, TypeScript       |
 | Orchestration | Apache Airflow, Kubernetes |
-| Monitoring | Prometheus, Grafana |
-| Container | Docker |
+| Monitoring    | Prometheus, Grafana     |
+| Container     | Docker                  |
 
 ## Key Features
 
-- **Distributed Processing**: Spark for large-scale data processing
-- **Real-time Streaming**: Kafka + Spark Structured Streaming
-- **ML Pipeline**: Automated training with MLflow
-- **RESTful API**: FastAPI with WebSocket support
-- **Interactive Dashboard**: React with real-time updates
-- **Production Ready**: Docker, Kubernetes, monitoring
-- **Scalable**: Horizontal scaling with Kubernetes
+- **Distributed Processing**: Spark for large-scale data processing  
+- **Real-time Streaming**: Kafka + Spark Structured Streaming  
+- **ML Pipeline**: Automated training with MLflow  
+- **RESTful API**: FastAPI with WebSocket support  
+- **Interactive Dashboard**: React with real-time updates  
+- **Production Ready**: Docker, Kubernetes, monitoring  
+- **Scalable**: Horizontal scaling with Kubernetes  
 
 ## Usage Examples
 
 ### Make a Prediction
-
-\`\`\`bash
+```bash
 curl -X POST http://localhost:8000/api/v1/predictions/predict/top6 \
   -H "Content-Type: application/json" \
   -d '{
@@ -159,37 +159,33 @@ curl -X POST http://localhost:8000/api/v1/predictions/predict/top6 \
     "xg_difference": 0.3,
     "defensive_rating": 15.2
   }'
-\`\`\`
+```
 
 ### Get Current Predictions
-
-\`\`\`bash
+```bash
 curl http://localhost:8000/api/v1/predictions/current-season
-\`\`\`
+```
 
 ### Trigger Model Training
-
-\`\`\`bash
+```bash
 curl -X POST http://localhost:8000/api/v1/predictions/trigger-training
-\`\`\`
+```
 
 ## Development
 
-### Run locally with hot reload:
-
-\`\`\`bash
+### Run locally with hot reload
+```bash
 npm run dev
-\`\`\`
+```
 
-### Access development services:
-- Spark Master: http://localhost:8080
-- Kafka UI: http://localhost:9000 (if using Kafdrop)
+### Access development services
+- Spark Master: [http://localhost:8080](http://localhost:8080)  
+- Kafka UI: [http://localhost:9000](http://localhost:9000) (if using Kafdrop)  
 
 ## Deployment
 
 ### Kubernetes Deployment
-
-\`\`\`bash
+```bash
 # Create namespace
 kubectl create namespace pl-prediction
 
@@ -198,74 +194,68 @@ kubectl apply -f k8s/
 
 # Check status
 kubectl get pods -n pl-prediction
-\`\`\`
+```
 
 ### Docker Compose Production
-
-\`\`\`bash
+```bash
 npm run prod
 npm run logs  # View logs
-\`\`\`
+```
 
 ## Monitoring
 
-- **Prometheus**: http://localhost:9090 (metrics)
-- **Grafana**: http://localhost:3001 (dashboards)
-- **MLflow**: http://localhost:5000 (model tracking)
+- **Prometheus**: [http://localhost:9090](http://localhost:9090)  
+- **Grafana**: [http://localhost:3001](http://localhost:3001)  
+- **MLflow**: [http://localhost:5000](http://localhost:5000)  
 
 ## Performance Tuning
 
 ### Spark Configuration
-\`\`\`yaml
+```yaml
 spark.executor.memory: 8g
 spark.driver.memory: 4g
 spark.sql.adaptive.enabled: true
 spark.shuffle.partitions: 200
-\`\`\`
+```
 
 ### Kafka Performance
-\`\`\`yaml
+```yaml
 num.partitions: 8
 replication.factor: 3
 compression.type: snappy
-\`\`\`
+```
 
 ## Troubleshooting
 
 ### Services not starting
-\`\`\`bash
-# Clean up and restart
+```bash
 docker-compose down -v
 npm run prod
-\`\`\`
+```
 
 ### Out of memory
-\`\`\`bash
+```bash
 # Increase Docker memory limits
 # Edit docker-compose.yml or system settings
-\`\`\`
+```
 
 ### Kafka connection issues
-\`\`\`bash
-# Check Kafka logs
+```bash
 docker logs kafka
-# Verify broker is healthy
 docker-compose logs kafka
-\`\`\`
+```
 
 ## Contributing
 
-1. Create a feature branch
-2. Make changes
-3. Test thoroughly
-4. Submit PR
+1. Create a feature branch  
+2. Make changes  
+3. Test thoroughly  
+4. Submit PR  
 
 ## License
-
 MIT
 
 ## Support
-
 For issues or questions, open an issue on GitHub or contact the team.
 
 ---
