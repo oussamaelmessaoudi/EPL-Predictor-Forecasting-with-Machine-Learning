@@ -1,1 +1,11 @@
 .env
+# Talend build & generated files
+/target/
+/Java/
+/.metadata/
+/logs/
+/temp/
+
+# OS files
+.DS_Store
+Thumbs.db
